@@ -1,0 +1,20 @@
+{
+  "name": "send-http-axios-doc",
+  "version": "1.17.0",
+  "description": "Herramienta para facil documentacion de apis",
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "send-http-axios-doc": "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Miguel guerrero",
+  "license": "ISC",
+  "dependencies": {
+    "express-list-endpoints": "^6.0.0",
+    "lodash": "^4.17.21"
+  }
+}

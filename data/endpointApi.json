@@ -1,0 +1,19 @@
+[
+  {
+    "url": "localhost:undefined",
+    "path": "/api/message",
+    "methods": [
+      "POST"
+    ],
+    "data": {"datos":"hola mundo"}
+  },
+  {
+    "url": "localhost:undefined",
+    "path": "/dashboard",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "data": {}
+  }
+]
