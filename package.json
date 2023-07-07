@@ -1,7 +1,7 @@
 {
   "name": "send-http-axios-doc",
-  "version": "1.19.0",
-  "description": "Herramienta para facil documentacion de apis",
+  "version": "1.20.0",
+  "description": "Herramienta para facilitar la documentación de APIs",
   "type": "module",
   "main": "index.js",
   "bin": {
@@ -11,11 +11,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
-  "author": "Miguel guerrero",
+  "author": "Miguel Guerrero",
   "license": "ISC",
   "dependencies": {
     "express-list-endpoints": "^6.0.0",
     "fs-extra": "^11.1.1",
     "lodash": "^4.17.21"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Eiine/Send-http-axios-doc.git"
   }
 }
