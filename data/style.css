@@ -1,12 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+::-webkit-scrollbar {
+    width: 5px;
+    height:5px;
+  }
 
-body{
+  ::-webkit-scrollbar-thumb {
+    width:1px;
+    background: #0d6efd  ; 
+    border-radius: 1px;
+  }
+  
+  
+  body{
     background: rgb(15,27,45);
     background: linear-gradient(90deg, rgba(15,27,45,1) 0%, rgba(15,39,75,1) 58%, rgba(15,27,45,1) 100%);
 }
 *{
     font-family: 'Share Tech Mono', monospace;
-    color:white;
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -70,6 +80,12 @@ p{
     padding: 0px;
     margin-bottom: 0px !important;
 }
+.json-formatter-row .json-formatter-key {
+    font-weight: bold;
+}
+h1, h2{
+    color:white;
+}
 #peticiones-saved li{
     margin: 3px;
 }
@@ -79,20 +95,20 @@ p{
 section{
     margin:0 auto;
     width: 100%;
-    max-width: 90vw;
     display:flex;
     justify-content: center;
     padding-bottom: 50px;
     gap: 2em;
 }
+
 form{
     display:flex;
     flex-direction: column;
 }
 .response_container{
-
+    
+    width:60%;
     display:flex;
-    width: 60%;
     flex-direction: column;
 }
 #peticiones-saved button{
@@ -101,18 +117,33 @@ form{
 .form select option{
     color:black;
 }
+.response-background{
+    background-image:unset !important;
+}
 .response{
-    color:black;
-    overflow:auto;
-    height:515px;
+
+    overflow:-moz-hidden-unscrollable;
     display:flex;
+    
+    height:91%;
+    box-sizing: border-box;
     border: 3px rgb(133, 133, 133) solid;
     background: rgb(243,243,243);
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     overflow: auto;
     border-radius: 5px;
+    background-image: linear-gradient(rgba(243, 243, 243, 0.5), rgba(243, 243, 243, 0.5)), url('./rocket.png');
+    background-size: 200px;
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
+.response::after{
+
+    opacity: 0.7;
+}
+.json-formatter-constructor-name {
+    color:rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
 }
 .response div img{
     width:200px;
@@ -134,8 +165,8 @@ form{
 
 .response_pre{
     color:black;
-    padding:10px;
-    max-width:95%;
+    padding:4px;
+    max-width:100%;
     max-height:500px;
 }
 .form{
@@ -154,7 +185,7 @@ li{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
   }
   
   .loading-spinner {
@@ -183,7 +214,7 @@ li{
     .response_container{
         width: 100%;
         margin-top: 20px;
-        text-align: center;
+
 
     }
     .recommendation{

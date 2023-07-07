@@ -11,11 +11,14 @@ let responseEmpty = document.getElementById("response-empty")
 let responseLoader = document.getElementById("response-loader")
 let responseContainer = document.getElementById("response-container")
 let peticiones_input=document.getElementById("peticion-input")
+let response_id=document.getElementById("response-id")
+
 //option recibe un objeto que puede tener token, method, entre otras cosas
 const startLoading = () => {
 responseContainer.innerHTML = "";
 responseEmpty.classList.add('none');
 responseLoader.classList.remove('none');
+response_id.classList.add('response-background');
 }
 const resetLoading = () => {
 responseEmpty.classList.remove('none');
@@ -43,13 +46,16 @@ axios({
       // Manejo de la respuesta exitosa
       
       if(!option.data.visit && !option.data.message){
-        document.getElementById("response-container").textContent = JSON.stringify(response.data, null, 2);
+        const data = new JSONFormatter(response.data)
+        document.getElementById("response-container").appendChild(data.render());
       }
     })
     .finally(() => { endLoader()})
     .catch(error => {
+      console.log(error)
+      document.getElementById("response-container").textContent = JSON.stringify(error.message, null, 2);
       // Manejo del error
-      resetLoading()
+     
       Swal.fire({
           icon: 'error',
           title: 'Tu peticion fallo',
@@ -91,7 +97,7 @@ let option = {
   method: method,
   url: url.replace(/\/$/, ''),
   path: path.replace(/^\//, ''),
-  data: JSON.parse(data),
+  data: data,
   token: token
 };
 send_http_axios(option.data, option);
@@ -196,6 +202,10 @@ let option = {
 };
 send_http_axios(option.data,option)
 }
-
 fetchData();
+
+const jsonFormatter = (rawData) =>{
+  const data = new JSONFormatter(rawData);
+  return data.render();
+}
 
