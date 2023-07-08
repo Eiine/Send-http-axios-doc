@@ -76,10 +76,34 @@ const createJsonApi = (app, port) => {
   });
 };
 
-const saveQueryBack=(req,res)=>{
-  let dato=req.body
-  console.log(dato);
-}
+const saveQueryBack = async (req, res) => {
+  let dato = req.body;
+
+  const currentFilePath = fileURLToPath(import.meta.url);
+  const rootPath = path.resolve(path.dirname(currentFilePath), '../..');
+  const filePath = path.join(rootPath, 'send/endpointApi.json');
+
+  const data = await fs.promises.readFile(filePath, 'utf8');
+  let oldList = JSON.parse(data);
+
+  const objetoModificado = dato;
+  const nombreObjeto = objetoModificado.nombre;
+
+  const indiceObjeto = oldList.findIndex(obj => obj.nombre === nombreObjeto);
+
+  if (indiceObjeto !== -1) {
+    const objetoExistente = oldList[indiceObjeto];
+    const objetoActualizado = { ...objetoExistente, ...objetoModificado };
+    oldList[indiceObjeto] = objetoActualizado;
+  }
+
+  const nuevoContenido = JSON.stringify(oldList);
+
+  await fs.promises.writeFile(filePath, nuevoContenido, 'utf8');
+
+  res.send('Contenido actualizado exitosamente');
+};
+
 
 
 export { createJsonApi, saveQueryBack };
