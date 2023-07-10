@@ -85,21 +85,11 @@ const saveQueryBack = async (req, res) => {
 
   const data = await fs.promises.readFile(filePath, 'utf8');
   let oldList = JSON.parse(data);
+  let oldList_filtrado= oldList.filter((element) => element.path !== dato.path)
+  let listNew=[...oldList_filtrado,dato]
+  let guardar=JSON.stringify(listNew)
 
-  const objetoModificado = dato;
-  const nombreObjeto = objetoModificado.nombre;
-
-  const indiceObjeto = oldList.findIndex(obj => obj.nombre === nombreObjeto);
-
-  if (indiceObjeto !== -1) {
-    const objetoExistente = oldList[indiceObjeto];
-    const objetoActualizado = { ...objetoExistente, ...objetoModificado };
-    oldList[indiceObjeto] = objetoActualizado;
-  }
-
-  const nuevoContenido = JSON.stringify(oldList);
-
-  await fs.promises.writeFile(filePath, nuevoContenido, 'utf8');
+  await fs.promises.writeFile(filePath,guardar , 'utf8');
 
   res.send('Contenido actualizado exitosamente');
 };

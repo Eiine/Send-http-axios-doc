@@ -52,8 +52,10 @@ axios({
     })
     .finally(() => { endLoader()})
     .catch(error => {
-      console.log(error)
-      document.getElementById("response-container").textContent = JSON.stringify(error.message, null, 2);
+      console.log(error.response)
+      const data = new JSONFormatter(error.response.data)
+        document.getElementById("response-container").appendChild(data.render());
+      //document.getElementById("response-container").textContent = JSON.stringify(error.response.data, null, 2);
       // Manejo del error
      
       Swal.fire({
@@ -97,7 +99,7 @@ let option = {
   method: method,
   url: url.replace(/\/$/, ''),
   path: path.replace(/^\//, ''),
-  data: data,
+  data: JSON.parse(data),
   token: token
 };
 send_http_axios(option.data, option);
@@ -164,12 +166,14 @@ const peticionesInput = document.getElementById('peticion-input');
 const selectedOption = peticionesInput.options[peticionesInput.selectedIndex];
 const selectedData = JSON.parse(selectedOption.getAttribute('data'));
 console.log(selectedData.data);
+
 dataH.value = JSON.stringify(selectedData.data)
 methodH.value = selectedData.methods[0].toLowerCase()
 urlH.value = selectedData.url
 pathH.value = selectedData.path
 tokenH.value = ""
 nameH.value=selectedData.path.split("/")[1]
+
 }
 
 // Ejemplo de uso con async/await
@@ -193,7 +197,7 @@ try {
 const saveQuery=async()=>{
 let datos= await getJsonFile()
 let datos2= datos.filter(datos=> datos.path == pathH.value)
-datos2[0].description=dataH.value
+datos2[0].data=JSON.parse(dataH.value)
 let option = {
   method: "post",
   url: "http://localhost:5000",
