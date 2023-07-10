@@ -1,6 +1,6 @@
 {
   "name": "send-http-axios-doc",
-  "version": "1.22.0",
+  "version": "1.24.0",
   "description": "Herramienta para facilitar la documentación de APIs",
   "type": "module",
   "main": "index.js",
