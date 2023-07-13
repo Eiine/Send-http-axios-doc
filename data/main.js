@@ -213,3 +213,13 @@ const jsonFormatter = (rawData) =>{
   return data.render();
 }
 
+const initialDataform=async()=>{
+  let datos= await getJsonFile()
+  methodH.value = datos[0].methods[0].toLowerCase()
+  urlH.value = datos[0].url
+  pathH.value = datos[0].path
+  tokenH.value = datos[0].tokenH ? datos[0].tokenH : "";
+  nameH.value=datos[0].path.split("/")[1]
+}
+
+initialDataform()
