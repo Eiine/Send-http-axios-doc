@@ -24,7 +24,6 @@ if (fs.existsSync(destinationFolderPath)) {
   console.log('Carpeta copiada exitosamente.');
 }
 
-
 const createJsonApi = (app, port) => {
   
   let dato = list(app);
@@ -47,6 +46,7 @@ const createJsonApi = (app, port) => {
       endpointData[existingIndex].methods = Array.from(
         new Set([...endpointData[existingIndex].methods, ...element.methods])
       );
+
     }
   });
 
@@ -55,30 +55,39 @@ const createJsonApi = (app, port) => {
   const publicFolderPath = path.join(currentModulePath, '../../send');
   const outputPath = path.join(publicFolderPath, 'endpointApi.json');
 
+  const existingContent = fs.readFileSync(outputPath, 'utf8');
+  const existingData = JSON.parse(existingContent);
+  
   if (fs.existsSync(outputPath)) {
-    const existingContent = fs.readFileSync(outputPath, 'utf8');
-    const existingData = JSON.parse(existingContent);
+    
     if (isEqual(existingData, endpointData)) {
       console.log('El archivo JSON ya existe y contiene los mismos datos. No se realizará ninguna acción.');
       return;
     }
   }
+  
+  //obtiene los objetos que tienen letras
 
-  const contenidoJson = JSON.stringify(endpointData, null, 2);
-
-  fs.writeFile(outputPath, contenidoJson, 'utf8', (error) => {
-    if (error) {
-      console.error('Ocurrió un error al crear el archivo JSON:', error);
-      return;
-    }
-
-    console.log(`El archivo JSON se creó correctamente en la ruta: ${outputPath}`);
+  let filtrado= existingData.filter(element=>{
+   if(typeof element.data== 'string'){
+     return element
+   }
+  })
+  
+  let resultado = endpointData.map(item => {
+    const encontrado = filtrado.find(element => element.path === item.path);
+  
+    return encontrado ? encontrado : item;
   });
-};
+  
+  console.log(resultado.length);
+  
+}
+
 
 const saveQueryBack = async (req, res) => {
-  let dato = req.body;
-
+  const dato=req.body;
+ 
   const currentFilePath = fileURLToPath(import.meta.url);
   const rootPath = path.resolve(path.dirname(currentFilePath), '../..');
   const filePath = path.join(rootPath, 'send/endpointApi.json');
@@ -86,10 +95,11 @@ const saveQueryBack = async (req, res) => {
   const data = await fs.promises.readFile(filePath, 'utf8');
   let oldList = JSON.parse(data);
   let oldList_filtrado= oldList.filter((element) => element.path !== dato.path)
+  
   let listNew=[...oldList_filtrado,dato]
   let guardar=JSON.stringify(listNew)
-
-  await fs.promises.writeFile(filePath,guardar , 'utf8');
+   fs.writeFileSync(filePath,guardar , 'utf8');
+  
 
   res.send('Contenido actualizado exitosamente');
 };
