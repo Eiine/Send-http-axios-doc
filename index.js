@@ -49,7 +49,8 @@ const createJsonApi = (app, port) => {
 
     }
   });
-
+// llenar el json
+ console.log(dato);
   const currentModuleFile = import.meta.url;
   const currentModulePath = path.dirname(fileURLToPath(currentModuleFile));
   const publicFolderPath = path.join(currentModulePath, '../../send');
@@ -80,14 +81,14 @@ const createJsonApi = (app, port) => {
     return encontrado ? encontrado : item;
   });
   
-  console.log(resultado.length);
+  const save= fs.writeFileSync(outputPath,JSON.stringify(resultado))
   
 }
 
 
 const saveQueryBack = async (req, res) => {
   const dato=req.body;
- 
+ console.log(dato);
   const currentFilePath = fileURLToPath(import.meta.url);
   const rootPath = path.resolve(path.dirname(currentFilePath), '../..');
   const filePath = path.join(rootPath, 'send/endpointApi.json');
@@ -107,4 +108,3 @@ const saveQueryBack = async (req, res) => {
 
 
 export { createJsonApi, saveQueryBack };
-
