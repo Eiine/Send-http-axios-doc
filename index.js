@@ -50,7 +50,6 @@ const createJsonApi = (app, port) => {
     }
   });
 // llenar el json
- console.log(dato);
   const currentModuleFile = import.meta.url;
   const currentModulePath = path.dirname(fileURLToPath(currentModuleFile));
   const publicFolderPath = path.join(currentModulePath, '../../send');
@@ -88,7 +87,6 @@ const createJsonApi = (app, port) => {
 
 const saveQueryBack = async (req, res) => {
   const dato=req.body;
- console.log(dato);
   const currentFilePath = fileURLToPath(import.meta.url);
   const rootPath = path.resolve(path.dirname(currentFilePath), '../..');
   const filePath = path.join(rootPath, 'send/endpointApi.json');
