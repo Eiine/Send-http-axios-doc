@@ -169,11 +169,10 @@ console.log(selectedData.data);
 
 dataH.value = JSON.stringify(selectedData.data).replace(/\\/g, '').replace(/^"|"$/g, '')
 methodH.value = selectedData.methods[0].toLowerCase()
-urlH.value = selectedData.url
+urlH.value = window.location.href.replace(/\/[^\/]+\/[^\/]+\/?$/, "/")
 pathH.value = selectedData.path
 tokenH.value = ""
 nameH.value=selectedData.path.split("/")[1]
-
 }
 
 // Ejemplo de uso con async/await
