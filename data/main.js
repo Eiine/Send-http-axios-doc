@@ -173,6 +173,7 @@ urlH.value = window.location.href.replace(/\/[^\/]+\/[^\/]+\/?$/, "/")
 pathH.value = selectedData.path
 tokenH.value = ""
 nameH.value=selectedData.path.split("/")[1]
+console.log(window.location.href.replace(/\/[^\/]+\/[^\/]+\/?$/, "/"));
 }
 
 // Ejemplo de uso con async/await
