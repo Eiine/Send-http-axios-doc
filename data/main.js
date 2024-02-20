@@ -222,7 +222,10 @@ const initialDataform=async()=>{
   urlH.value = datos[0].url
   pathH.value = datos[0].path
   tokenH.value = datos[0].tokenH ? datos[0].tokenH : "";
+  descriptionH.value= datos[0].description
   nameH.value=datos[0].path.split("/")[1]
+  dataH.value=datos[0].data
+  console.log(datos[0]);
 }
 
 initialDataform()
