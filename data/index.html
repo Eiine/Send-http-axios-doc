@@ -1,4 +1,4 @@
-<!<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -28,8 +28,8 @@
                   <option value="delete">delete</option>
                 </select>
                 <input type="text" id="name-query" required placeholder="Nombre de la peticion" class="mb-2 form-control" value="" >
-                <input type="text" id="url-input" placeholder="URL Base" class="mb-2 form-control" value="https://pokeapi.co/api/v2/
-">
+                <input type="text" id="url-input" placeholder="URL Base" class="mb-2 form-control" value="https://pokeapi.co/api/v2/">
+                <textarea id="description-input" rows="4" cols="50" placeholder="Escribe una decripcion" class="mb-2 form-control"></textarea>
                 <input type="text" id="path-input" placeholder="Ruta" class="mb-2 form-control" value="pokemon/ditto">
                 <input type="file" id="file-input" name="file" placeholder="Agrega un archivo" class="mb-2 form-control">
                 <input type="text" id="token-input" placeholder="Token de autorización" class="mb-2 form-control">
@@ -38,7 +38,6 @@
                 <button type="button" class="btn btn-primary btn-gradient mb-1" onclick="Sharequery()">Compartir</button>
                 <button type="button" class="btn btn-primary btn-gradient mb-1" onclick="saveQuery()">Guardar</button>
           </form>
-       
         <div class="response_container text-truncate">
             <h2 class="text-white text-center">Respuesta:</h3>
             <div class="response" id="response-id" >
