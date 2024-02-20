@@ -87,15 +87,15 @@ const createJsonApi = (app, port) => {
 
 const saveQueryBack = async (req, res) => {
   const dato=req.body;
+
   const currentFilePath = fileURLToPath(import.meta.url);
   const rootPath = path.resolve(path.dirname(currentFilePath), '../..');
   const filePath = path.join(rootPath, 'send/endpointApi.json');
-
   const data = await fs.promises.readFile(filePath, 'utf8');
   let oldList = JSON.parse(data);
-  let oldList_filtrado= oldList.filter((element) => element.path !== dato.path)
+  let oldList_filtrado= oldList.filter((element) => element.path !== dato[0].path)
+  let listNew=[...oldList_filtrado,dato[0]]
   
-  let listNew=[...oldList_filtrado,dato]
   let guardar=JSON.stringify(listNew)
    fs.writeFileSync(filePath,guardar , 'utf8');
   

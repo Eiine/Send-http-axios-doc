@@ -12,7 +12,7 @@ let responseLoader = document.getElementById("response-loader")
 let responseContainer = document.getElementById("response-container")
 let peticiones_input=document.getElementById("peticion-input")
 let response_id=document.getElementById("response-id")
-
+let descriptionH=document.getElementById("description-input")
 //option recibe un objeto que puede tener token, method, entre otras cosas
 const startLoading = () => {
 responseContainer.innerHTML = "";
@@ -34,10 +34,11 @@ responseLoader.classList.add('none');
 
 }
 const send_http_axios=(data,option)=>{
+console.log(data);
 axios({
     method: option.method,
     url: `${option.url}/${option.path}`,
-    data: typeof data === 'object' ? data : (data && data.trim() !== '' ? JSON.parse(data) : null),
+    data: data,
     headers: {
      "Authorization": option.token,
   },
@@ -165,12 +166,13 @@ const itemLoad = () => {
 const peticionesInput = document.getElementById('peticion-input');
 const selectedOption = peticionesInput.options[peticionesInput.selectedIndex];
 const selectedData = JSON.parse(selectedOption.getAttribute('data'));
-console.log(selectedData.data);
+
 
 dataH.value = JSON.stringify(selectedData.data).replace(/\\/g, '').replace(/^"|"$/g, '')
 methodH.value = selectedData.methods[0].toLowerCase()
 urlH.value = window.location.href.replace(/\/[^\/]+\/[^\/]+\/?$/, "/")
 pathH.value = selectedData.path
+descriptionH.value= selectedData.description
 tokenH.value = ""
 nameH.value=selectedData.path.split("/")[1]
 console.log(window.location.href.replace(/\/[^\/]+\/[^\/]+\/?$/, "/"));
@@ -197,7 +199,7 @@ const saveQuery=async()=>{
 let datos= await getJsonFile()
 let datos2= datos.filter(datos=> datos.path == pathH.value)
 
-
+datos2[0].description=descriptionH.value
 datos2[0].data=dataH.value
 let option = {
   method: "post",
@@ -205,7 +207,7 @@ let option = {
   path:"saveQuery",
   data: JSON.stringify(datos2[0]),
 };
-send_http_axios(option.data,option)
+send_http_axios(datos2,option)
 }
 fetchData();
 
