@@ -34,7 +34,6 @@ responseLoader.classList.add('none');
 
 }
 const send_http_axios=(data,option)=>{
-console.log(data);
 axios({
     method: option.method,
     url: `${option.url}/${option.path}`,
@@ -70,52 +69,66 @@ axios({
   }
 //Funcion que se encarga de enviar la peticion realizada en el front
 let sendRequest = () => {
-startLoading()
-let data = dataH.value;
-let method = methodH.value;
-let url = urlH.value;
-let path = pathH.value;
-let token = tokenH.value;
+  try {
+    startLoading()
+    let data = dataH.value;
+    let method = methodH.value;
+    let url = urlH.value;
+    let path = pathH.value;
+    let token = tokenH.value;
+    
+    let fileInput = document.getElementById('file-input');
+    let file = fileInput.files[0];
+    if (file) {
+    let fileData = new FormData();
+    fileData.append('file', file);
+    fileData.append('data', data);
+    
+    let option = {
+      method: method,
+      url: url.replace(/\/$/, ''),
+      path: path.replace(/^\//, ''),
+      data: fileData,
+      token: token
+    };
+    
+    send_http_axios(fileData, option);
+    } else {
+    let data = dataH.value;
+    if (data){
+    let option = {
+      method: method,
+      url: url.replace(/\/$/, ''),
+      path: path.replace(/^\//, ''),
+      data: JSON.parse(data),
+      token: token
+    };
+    send_http_axios(option.data, option);
+    }else{
+    let data = dataH.value;
+    let option = {
+      method: method,
+      url: url.replace(/\/$/, ''),
+      path: path.replace(/^\//, ''),
+      data: data,
+      token: token
+    };
+    send_http_axios(option.data, option);
+    }
+    }
+        
+  } catch (error) {
+  endLoader()
+  resetLoading()
+  Swal.fire({
+      icon: 'error',
+      title: `Objeto mal confeccionado`,
+      showConfirmButton: false,
+      timer: 1500,
+      confirmButtonColor: '#0d6efd',
+    })
 
-let fileInput = document.getElementById('file-input');
-let file = fileInput.files[0];
-if (file) {
-let fileData = new FormData();
-fileData.append('file', file);
-fileData.append('data', data);
-
-let option = {
-  method: method,
-  url: url.replace(/\/$/, ''),
-  path: path.replace(/^\//, ''),
-  data: fileData,
-  token: token
-};
-
-send_http_axios(fileData, option);
-} else {
-let data = dataH.value;
-if (data){
-let option = {
-  method: method,
-  url: url.replace(/\/$/, ''),
-  path: path.replace(/^\//, ''),
-  data: JSON.parse(data),
-  token: token
-};
-send_http_axios(option.data, option);
-}else{
-let data = dataH.value;
-let option = {
-  method: method,
-  url: url.replace(/\/$/, ''),
-  path: path.replace(/^\//, ''),
-  data: data,
-  token: token
-};
-send_http_axios(option.data, option);
-}
-}
+  }
 };
 
 //Funcion para compartir trabajon actual
